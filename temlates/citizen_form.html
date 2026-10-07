@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Citizen Registration</title>
+
+    {% load static %}
+     <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js">
+
+    <link rel="stylesheet" href="../static/ticket_process.css">
+
+</head>
+
+<body>
+
+<div class="form-card">
+
+    <h1>CITIZEN</h1>
+
+    <p>Jaza taarifa za abiria</p>
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <label>Full Name</label>
+
+        <input type="text"
+               name="name"
+               required>
+
+
+        <label>Citizen ID</label>
+
+        <input type="text"
+               name="citizen_id"
+               required>
+
+
+        <label>Phone Number</label>
+
+        <input type="tel"
+               name="phone"
+               required>
+
+
+        <label>From</label>
+
+        <input type="text"
+               name="from_place"
+               required>
+
+
+        <label>To</label>
+
+        <input type="text"
+               name="to_place"
+               required>
+
+
+        <label>Travel Date</label>
+
+        <input type="date"
+               name="travel_date"
+               required>
+
+
+        <label>Travel Time</label>
+
+        <input type="time"
+               name="travel_time"
+               required>
+
+
+        <label>Seat</label>
+
+        <select name="seat" required>
+
+            <option value="">
+                Chagua Seat
+            </option>
+
+            <option value="No1">No1</option>
+            <option value="No2">No2</option>
+            <option value="No3">No3</option>
+            <option value="No4">No4</option>
+            <option value="No5">No5</option>
+            <option value="No6">No6</option>
+
+        </select>
+
+
+       
+
+        <button type="submit">
+            CONTINUE
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

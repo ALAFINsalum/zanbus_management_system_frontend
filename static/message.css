@@ -1,0 +1,342 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #f1f5f9;
+}
+
+
+/* =========================
+   MESSAGE CONTAINER
+========================= */
+
+.messages-container {
+
+    position: fixed;
+
+    top: 25px;
+    right: 25px;
+
+    width: 360px;
+
+    z-index: 9999;
+}
+
+
+/* =========================
+   GENERAL MESSAGE BOX
+========================= */
+
+.message-box {
+
+    display: flex;
+    align-items: center;
+
+    padding: 16px 18px;
+
+    margin-bottom: 12px;
+
+    border-radius: 12px;
+
+    color: white;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.18);
+
+    animation:
+        messageIn 0.5s ease;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+
+/* =========================
+   BLUE SUCCESS BOX
+========================= */
+
+.success-message {
+
+    background: linear-gradient(
+        135deg,
+        #087eff,
+        #0056d6
+    );
+
+}
+
+
+/* =========================
+   RED ERROR BOX
+========================= */
+
+.error-message {
+
+    background: linear-gradient(
+        135deg,
+        #ff3b3b,
+        #d90000
+    );
+
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.message-icon {
+
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.2);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    margin-right: 12px;
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+.message-content {
+
+    flex: 1;
+}
+
+
+.message-content strong {
+
+    display: block;
+
+    font-size: 17px;
+
+    margin-bottom: 4px;
+}
+
+
+.message-content p {
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+    margin: 0;
+}
+
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.close-message {
+
+    background: none;
+
+    border: none;
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    margin-left: 10px;
+
+    opacity: 0.8;
+
+}
+
+
+.close-message:hover {
+
+    opacity: 1;
+
+}
+
+
+/* =========================
+   MESSAGE ANIMATION
+========================= */
+
+@keyframes messageIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(100px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateX(0);
+
+    }
+
+}
+
+
+/* =========================
+   HIDE MESSAGE
+========================= */
+
+.hide-message {
+
+    opacity: 0;
+
+    transform:
+        translateX(100px);
+
+}
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card {
+
+    width: 380px;
+
+    padding: 35px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+.login-card h1 {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    color: #111827;
+
+}
+
+
+/* =========================
+   INPUT
+========================= */
+
+.input-box {
+
+    margin-bottom: 20px;
+}
+
+
+.input-box label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+    color: #374151;
+}
+
+
+.input-box input {
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+
+.input-box input:focus {
+
+    border-color: #087eff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(8, 126, 255, 0.12);
+
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-btn {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #087eff;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+.login-btn:hover {
+
+    background: #0056d6;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+

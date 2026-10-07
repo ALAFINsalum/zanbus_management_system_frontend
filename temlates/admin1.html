@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Form</title>
+   <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js">
+  <link rel="stylesheet" href="../static/admin_longin.css" />
+</head>
+<body>
+  <main class="login-card">
+    <div class="logo">Zb</div>
+    <h1>Amin login</h1>
+    <p class="subtitle">longin as admin</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div>
+        <label for="username"> 👤Jina la mtumiaji</label> <br><br>
+            <input type="text" id="username" name="username" placeholder="Username" required /> <br> <br>
+
+            <label for="password">🔒Nenosiri</label> <br><br>
+            <input type="password" id="password" name="password" placeholder="Password" required />
+        </div><br>
+
+      <button type="submit">Ingia</button>
+    </form>
+
+    <p class="signup">Huna akaunti? <a href="#">Jisajili</a></p>
+  </main>
+</body>
+</html>

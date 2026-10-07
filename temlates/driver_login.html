@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZANBUS driver </title>
+     <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js">
+
+    <link rel="stylesheet" href="../static/track_ticket.css">
+    <link rel="stylesheet" href="../static/driver_login.css">
+</head>
+
+<body >
+{% if messages %}
+    <div class="messages-container">
+
+        {% for message in messages %}
+
+            {% if message.tags == "success" %}
+                <div class="message-box success-message">
+                    <span class="message-icon">✓</span>
+
+                    <div class="message-content">
+                        <strong>Karibu!</strong>
+                        <p>{{ message }}</p>
+                    </div>
+
+                    <button class="close-message" onclick="closeMessage(this)">
+                        ×
+                    </button>
+                </div>
+
+            {% elif message.tags == "error" %}
+                <div class="message-box error-message">
+                    <span class="message-icon">!</span>
+
+                    <div class="message-content">
+                        <strong>Imekataa!</strong>
+                        <p>{{ message }}</p>
+                    </div>
+
+                    <button class="close-message" onclick="closeMessage(this)">
+                        ×
+                    </button>
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+{% endif %}
+
+
+
+    <!-- ==============================
+         TRACK TICKET CARD
+    ============================== -->
+
+    <div class="track-container">
+
+        <div class="track-card">
+
+
+            <!-- LOGO -->
+
+            <div class="logo-section">
+
+                <div class="logo">
+                    Z
+                </div>
+
+                <h1>ZANBUS</h1>
+
+                <p>TICKET SYSTEM</p>
+
+            </div>
+
+
+
+            <!-- TITLE -->
+
+            <div class="title-section">
+
+                <h2>ingia kama dereva </h2>
+
+                <p>
+                    weka taarifa zako kwa usahihi uanze kupata huduma kama huna account unaweza kuomba usajili.
+                </p>
+
+            </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+    <div class="input-group">
+
+        <label>
+            jina la mtumiaji
+        </label>
+
+        <input 
+            type="text"
+            name="username"
+            placeholder="user name  "
+            autocomplete="off"
+            required
+        >
+        <br><br>
+
+
+            <label>
+            neno la siri
+        </label>
+
+         <input 
+            type="password"
+
+            name="password"
+            placeholder="password  "
+            autocomplete="off"
+            required
+        >
+        <small id="errorMessage"></small>
+
+    </div>
+
+    <button 
+        type="submit"
+        id="searchButton">
+
+        <span id="buttonText">
+            Ingia 
+        </span>
+
+        <span id="loader" class="loader"></span>
+
+    </button>
+
+</form>
+<br>
+<a href="driver_app.html">omba usajili </a>
+ 
+
+
+
+           
+
+
+
+            <!-- SEARCH RESULT -->
+
+            <div
+                id="result"
+                class="result">
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="footer">
+
+                <p>
+                    © 2026 ZANBUS Ticket System
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==============================
+         JAVASCRIPT
+    ============================== -->
+
+    <script>
+
+        const slide =
+            document.querySelector(".slide");
+
+
+        // ==============================
+        // NEXT IMAGE
+        // ==============================
+
+        function nextSlide() {
+
+            const items =
+                document.querySelectorAll(".item");
+
+            if (items.length > 0) {
+
+                slide.appendChild(items[0]);
+
+            }
+
+        }
+
+
+        // ==============================
+        // AUTOMATIC SLIDER
+        // ==============================
+
+    setInterval(() => {
+    const items = document.querySelectorAll('.item');
+
+    slide.appendChild(items[0]);
+
+    const newItems = document.querySelectorAll('.item');
+    const content = newItems[0].querySelector('.content');
+
+    if (content) {
+        content.classList.remove('animate');
+
+        void content.offsetWidth;
+
+        content.classList.add('animate');
+    }
+
+}, 3000);
+        
+        
+        (nextSlide, 4000);
+
+
+        
+
+
+        
+
+
+
+        
+    </script>
+
+</body>
+
+</html>
+    
+</body>
+</html>

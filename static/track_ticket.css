@@ -1,0 +1,828 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: white;
+
+    background: #000;
+
+}
+
+
+
+/* =========================================
+   SLIDER CONTAINER
+========================================= */
+
+.container {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+}
+
+
+
+/* =========================================
+   SLIDE
+========================================= */
+
+.slide {
+
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+}
+
+
+
+/* =========================================
+   EACH IMAGE
+========================================= */
+
+.item {
+
+    width: 200px;
+    height: 300px;
+
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    border-radius: 25px;
+
+    background-position: center;
+
+    background-size: cover;
+
+    box-shadow:
+        0 20px 40px
+        rgba(0, 0, 0, 0.45);
+
+     transition: 0.3s;
+
+}
+
+
+
+/* =========================================
+   FIRST IMAGE = LARGE BACKGROUND
+========================================= */
+
+.item:nth-child(1) {
+
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    left: 0;
+
+    transform: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+}
+
+
+
+/* =========================================
+   SECOND IMAGE
+========================================= */
+
+.item:nth-child(2) {
+
+    left: 65%;
+
+}
+
+
+
+/* =========================================
+   THIRD IMAGE
+========================================= */
+
+.item:nth-child(3) {
+
+    left: calc(65% + 220px);
+
+}
+
+
+
+/* =========================================
+   FOURTH IMAGE
+========================================= */
+
+.item:nth-child(4) {
+
+    left: calc(65% + 440px);
+
+}
+
+
+
+/* =========================================
+   FIFTH IMAGE
+========================================= */
+
+.item:nth-child(5) {
+
+    left: calc(65% + 660px);
+
+}
+
+
+
+/* =========================================
+   SIXTH IMAGE
+========================================= */
+
+.item:nth-child(6) {
+
+    left: calc(65% + 880px);
+
+}
+
+
+
+/* =========================================
+   IMAGE CONTENT
+========================================= */
+
+.item .content {
+
+    position: absolute;
+
+    top: 45%;
+
+    left: 80px;
+
+    width: 350px;
+
+    color: white;
+
+    text-shadow:
+        0 3px 10px
+        rgba(0, 0, 0, 0.8);
+
+}
+
+
+
+/* =========================================
+   HIDE CONTENT FOR SMALL CARDS
+========================================= */
+
+.item:not(:first-child) .content {
+
+    display: none;
+
+}
+
+
+
+/* =========================================
+   IMAGE NAME
+========================================= */
+
+.item .name {
+
+    font-size: 55px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+}
+
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.item .des {
+
+    margin-top: 12px;
+
+    font-size: 18px;
+
+    line-height: 1.5;
+
+}
+
+
+
+/* =========================================
+   DARK OVERLAY
+========================================= */
+
+.overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.20),
+            rgba(0, 0, 0, 0.45)
+        );
+
+}
+
+
+
+/* =========================================
+   TRACK CONTAINER
+========================================= */
+
+.track-container {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+
+
+/* =========================================
+   GLASS CARD
+========================================= */
+
+.track-card {
+
+    width: 100%;
+
+    max-width: 460px;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.25);
+
+
+    backdrop-filter:
+        blur(15px);
+
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+
+    box-shadow:
+        0 30px 80px
+        rgba(0, 0, 0, 0.40);
+
+}
+
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo-section {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.logo {
+
+    width: 60px;
+
+    height: 60px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background:
+        rgba(255, 255, 255, 0.9);
+
+    color: #12304a;
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+}
+
+
+.logo-section h1 {
+
+    margin-top: 10px;
+
+    font-size: 28px;
+
+    letter-spacing: 4px;
+
+}
+
+
+.logo-section p {
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.7;
+
+}
+
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.title-section {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.title-section h2 {
+
+    font-size: 23px;
+
+    margin-bottom: 9px;
+
+}
+
+
+.title-section p {
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    opacity: 0.75;
+
+}
+
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+.input-group {
+
+    margin-bottom: 18px;
+
+}
+
+
+.input-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+.input-group input {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.25);
+
+
+    background:
+        rgba(0, 0, 0, 0.25);
+
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+
+}
+
+
+.input-group input::placeholder {
+
+    color:
+        rgba(255, 255, 255, 0.45);
+
+}
+
+
+.input-group input:focus {
+
+    border-color:
+        rgba(255, 255, 255, 0.75);
+
+}
+
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+#errorMessage {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #ff9696;
+
+    font-size: 12px;
+
+}
+
+
+
+/* =========================================
+   SEARCH BUTTON
+========================================= */
+
+#searchButton {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: white;
+
+    color: #12304a;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+#searchButton:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.3);
+
+}
+
+
+#searchButton:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+}
+
+
+
+/* =========================================
+   LOADER
+========================================= */
+
+.loader {
+
+    display: none;
+
+    width: 17px;
+
+    height: 17px;
+
+    border: 3px solid
+        rgba(0, 0, 0, 0.2);
+
+    border-top-color:
+        #12304a;
+
+    border-radius: 50%;
+
+    animation:
+        spin 0.7s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+
+/* =========================================
+   INFO
+========================================= */
+
+.info-box {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+}
+
+
+.info-icon {
+
+    width: 23px;
+
+    height: 23px;
+
+    min-width: 23px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: white;
+
+    color: #12304a;
+
+    font-weight: bold;
+
+}
+
+
+.info-box p {
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    opacity: 0.7;
+
+}
+
+
+
+/* =========================================
+   RESULT
+========================================= */
+
+.result {
+
+    margin-top: 20px;
+
+}
+
+
+.search-result {
+
+    padding: 18px;
+
+    border-radius: 13px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+}
+
+
+.result-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: #12304a;
+
+    font-weight: bold;
+
+}
+
+
+.search-result h3 {
+
+    margin-top: 10px;
+
+}
+
+
+.search-result strong {
+
+    display: block;
+
+    margin-top: 7px;
+
+}
+
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+
+    margin-top: 22px;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    opacity: 0.45;
+
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .item:not(:first-child) {
+
+        display: none;
+
+    }
+
+
+    .item .content {
+
+        left: 25px;
+
+        width: 250px;
+
+        top: 15%;
+
+    }
+
+
+    .item .name {
+
+        font-size: 35px;
+
+    }
+
+
+    .item .des {
+
+        font-size: 14px;
+
+    }
+
+
+    .track-card {
+
+        max-width: 400px;
+
+        padding: 25px 20px;
+
+    }
+
+}
+
+
+.content.animate .name {
+    animation: textIn 0.8s ease forwards;
+}
+
+.content.animate .des {
+    animation: textIn 1s ease forwards;
+}
+
+.content.animate button {
+    animation: textIn 1.2s ease forwards;
+}
+
+@keyframes textIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

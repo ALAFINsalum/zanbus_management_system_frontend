@@ -1,0 +1,15 @@
+body{
+    background-image: url(../static/image/images\ \(4\).jfif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation: zoombackground 10s ease-in-out infinite alternate;
+}
+@keyframes zoombackground {
+    from {
+        background-size: 100%;
+    }
+    to {
+        background-size: 115%;
+    }
+
+}

@@ -1,0 +1,433 @@
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   TOP BAR
+===================================================== */
+
+.top-bar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 70px;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 25px;
+
+    z-index: 1000;
+
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+
+/* HAMBURGER */
+
+.menu-btn {
+    width: 45px;
+    height: 45px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.menu-btn span {
+    display: block;
+
+    width: 28px;
+    height: 3px;
+
+    background: #265bce;
+
+    border-radius: 5px;
+
+    transition: 0.3s;
+}
+
+
+.menu-btn:hover span {
+    background: #2563eb;
+}
+
+
+/* TITLE */
+
+.admin-title {
+    margin-left: 15px;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+/* =====================================================
+   TOP RIGHT
+===================================================== */
+
+.topbar-actions {
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.icon-button {
+    border: none;
+
+    background: transparent;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+
+.top-avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -290px;
+
+    width: 280px;
+    height: 100vh;
+
+    background: #111827;
+
+    z-index: 3000;
+
+    transition: left 0.3s ease;
+
+    padding-top: 20px;
+
+    box-shadow: 5px 0 25px rgba(0,0,0,0.25);
+
+    overflow-y: auto;
+}
+
+
+/* SIDEBAR OPEN */
+
+.sidebar.active {
+    left: 0;
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.sidebar-logo {
+    height: 70px;
+
+    padding: 0 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    color: white;
+
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+
+.sidebar-logo h2 {
+    font-size: 23px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   CLOSE
+===================================================== */
+
+.close-btn {
+    position: absolute;
+
+    top: 22px;
+    right: 15px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    line-height: 1;
+}
+
+
+.close-btn:hover {
+    color: #ef4444;
+}
+
+
+/* =====================================================
+   NAV LINKS
+===================================================== */
+
+.nav-links {
+    list-style: none;
+
+    padding: 20px 12px;
+
+    margin: 0;
+}
+
+
+.nav-links li {
+    margin-bottom: 6px;
+}
+
+
+.nav-links a {
+    text-decoration: none;
+
+    color: #d1d5db;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 14px 15px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+
+.nav-links a:hover {
+    background: #2563eb;
+
+    color: white;
+}
+
+
+.nav-links a span:first-child {
+    width: 25px;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.sidebar-logout {
+    position: absolute;
+
+    bottom: 25px;
+
+    left: 12px;
+    right: 12px;
+}
+
+
+.sidebar-logout a {
+    text-decoration: none;
+
+    color: #fca5a5;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 14px 15px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+
+.sidebar-logout a:hover {
+    background: #dc2626;
+
+    color: white;
+}
+
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.overlay {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background: rgba(0,0,0,0.45);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    z-index: 2500;
+
+    transition: 0.3s;
+}
+
+
+.overlay.active {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+/* =====================================================
+   MAIN DASHBOARD
+===================================================== */
+
+.dashboard-content {
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding-top: 100px;
+
+    padding-left: 30px;
+
+    padding-right: 30px;
+
+    padding-bottom: 40px;
+}
+
+
+/* =====================================================
+   TABLE FIX
+===================================================== */
+
+.table-frame {
+    width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+.table-frame table {
+    min-width: 1200px;
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+/* Reference number isionekane vizuri */
+
+.table-frame th:first-child,
+.table-frame td:first-child {
+    min-width: 160px;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .admin-title {
+        font-size: 16px;
+    }
+
+
+    .topbar-actions {
+        gap: 5px;
+    }
+
+
+    .dashboard-content {
+        padding-left: 15px;
+
+        padding-right: 15px;
+    }
+
+
+    .sidebar {
+        width: 270px;
+    }
+
+}
+

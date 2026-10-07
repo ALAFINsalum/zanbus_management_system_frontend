@@ -1,0 +1,291 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    background: #071522;
+
+    color: white;
+
+    min-height: 100vh;
+}
+
+
+/* HEADER */
+
+.topbar {
+
+    height: 70px;
+
+    padding: 0 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #0b2235;
+
+    border-bottom: 1px solid
+        rgba(255,255,255,0.1);
+}
+
+
+.logo {
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+}
+
+
+.page-title {
+
+    color: #cbd5e1;
+
+}
+
+
+/* CONTAINER */
+
+.tracking-container {
+
+    width: 95%;
+
+    max-width: 1300px;
+
+    margin: 25px auto;
+}
+
+
+/* INFO */
+
+.info-card {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    background: #102c42;
+
+    padding: 18px 22px;
+
+    border-radius: 15px;
+
+    margin-bottom: 18px;
+}
+
+
+.status-dot {
+
+    display: inline-block;
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 12px #22c55e;
+
+    margin-right: 8px;
+}
+
+
+.bus-count {
+
+    color: #cbd5e1;
+}
+
+
+.bus-count strong {
+
+    color: #22c55e;
+
+    font-size: 20px;
+}
+
+
+/* MAP */
+
+#map {
+
+    width: 100%;
+
+    height: clamp(520px, 72vh, 820px);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.35);
+
+}
+
+
+/* USER CARD */
+
+.user-card {
+
+    margin-top: 18px;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    background: #102c42;
+}
+
+
+.user-card h3 {
+
+    margin-bottom: 8px;
+}
+
+
+.user-card p {
+
+    color: #94a3b8;
+}
+
+
+/* BUS SECTION */
+
+.bus-section {
+
+    margin-top: 25px;
+}
+
+
+.bus-section h2 {
+
+    margin-bottom: 15px;
+}
+
+
+/* BUS CARD */
+
+.bus-card {
+
+    background: #102c42;
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    margin-bottom: 12px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    transition: 0.3s;
+}
+
+
+.bus-card:hover {
+
+    transform: translateY(-3px);
+
+    background: #153953;
+}
+
+
+.bus-name {
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.bus-online {
+
+    color: #4ade80;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+}
+
+
+.distance {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #38bdf8;
+}
+
+
+.loading {
+
+    color: #94a3b8;
+
+    padding: 20px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    .topbar {
+
+        padding: 0 15px;
+
+    }
+
+    .page-title {
+
+        display: none;
+
+    }
+
+    #map {
+
+        height: clamp(430px, 68vh, 620px);
+
+    }
+
+    .bus-card {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+
+    }
+
+}
+
+#googleMapFallback {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.tracking-status {
+    margin-left: 18px;
+    color: #cbd5e1;
+    font-size: 13px;
+}

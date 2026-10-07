@@ -1,0 +1,322 @@
+/* =========================================
+   DJANGO MESSAGE CONTAINER
+========================================= */
+
+.messages-container {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+
+    width: min(400px, calc(100% - 30px));
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    z-index: 99999;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   MESSAGE BOX
+========================================= */
+
+.message-box {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding: 16px 45px 18px 16px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    border: 1px solid #e5e5e5;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+
+    overflow: hidden;
+
+    pointer-events: auto;
+
+    animation:
+        messageSlideIn 0.45s ease forwards;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+
+/* =========================================
+   MESSAGE ICON
+========================================= */
+
+.message-icon {
+    width: 34px;
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   MESSAGE CONTENT
+========================================= */
+
+.message-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.message-content strong {
+    display: block;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+.message-content p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: #555;
+
+    word-break: break-word;
+}
+
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.message-close {
+    position: absolute;
+
+    top: 9px;
+    right: 10px;
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 24px;
+    line-height: 1;
+
+    color: #777;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.message-close:hover {
+    background: #f1f1f1;
+    color: #111;
+}
+
+
+/* =========================================
+   SUCCESS
+========================================= */
+
+.message-box.success {
+    border-left: 5px solid #16a34a;
+}
+
+.message-box.success .message-icon {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.message-box.success strong {
+    color: #15803d;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.message-box.error {
+    border-left: 5px solid #dc2626;
+}
+
+.message-box.error .message-icon {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.message-box.error strong {
+    color: #b91c1c;
+}
+
+
+/* =========================================
+   WARNING
+========================================= */
+
+.message-box.warning {
+    border-left: 5px solid #f59e0b;
+}
+
+.message-box.warning .message-icon {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.message-box.warning strong {
+    color: #b45309;
+}
+
+
+/* =========================================
+   INFO
+========================================= */
+
+.message-box.info {
+    border-left: 5px solid #2563eb;
+}
+
+.message-box.info .message-icon {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.message-box.info strong {
+    color: #1d4ed8;
+}
+
+
+/* =========================================
+   PROGRESS BAR
+   5 SECONDS
+========================================= */
+
+.message-progress {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    height: 3px;
+    width: 100%;
+
+    background: currentColor;
+
+    transform-origin: left;
+
+    animation: messageProgress 5s linear forwards;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes messageSlideIn {
+
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes messageSlideOut {
+
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+
+@keyframes messageProgress {
+
+    from {
+        transform: scaleX(1);
+    }
+
+    to {
+        transform: scaleX(0);
+    }
+}
+
+
+/* =========================================
+   CLOSING STATE
+========================================= */
+
+.message-box.closing {
+    animation: messageSlideOut 0.4s ease forwards;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .messages-container {
+        top: 15px;
+        right: 15px;
+        left: 15px;
+
+        width: auto;
+    }
+
+    .message-box {
+        padding: 14px 42px 17px 14px;
+    }
+
+    .message-content strong {
+        font-size: 14px;
+    }
+
+    .message-content p {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-reboot.min.css">
+       <link rel="stylesheet" href="../static/ticket_process.css">
+    <link rel="stylesheet" href="../static/message2.css">
+    <script src="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/message.js"></script>
+<body>
+
+       <!-- =========================
+     DJANGO MESSAGES
+========================= -->
+{% if messages %}
+<div class="messages-container" id="messagesContainer">
+
+    {% for message in messages %}
+
+        <div class="message-box {{ message.tags }}" role="alert">
+
+            <div class="message-icon">
+
+                {% if message.tags == "success" %}
+                    ✓
+                {% elif message.tags == "error" %}
+                    !
+                {% elif message.tags == "warning" %}
+                    ⚠
+                {% elif message.tags == "info" %}
+                    i
+                {% else %}
+                    !
+                {% endif %}
+
+            </div>
+
+            <div class="message-content">
+                <strong>
+                    {% if message.tags == "success" %}
+                        Success
+                    {% elif message.tags == "error" %}
+                        Error
+                    {% elif message.tags == "warning" %}
+                        Warning
+                    {% elif message.tags == "info" %}
+                        Information
+                    {% else %}
+                        Message
+                    {% endif %}
+                </strong>
+
+                <p>{{ message }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="message-close"
+                onclick="closeMessage(this)"
+                aria-label="Close message">
+                &times;
+            </button>
+
+            <div class="message-progress"></div>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+{% endif %}
+<div class="form-card">
+   <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+        
+
+
+        <label>Full Name</label>
+
+        <input type="text"
+               name="name"
+               required placeholder="mfano: ali moh ali">
+
+
+        <label>leseni ya udereva</label>
+
+        <input type="text"
+               name="licen"
+               required placeholder="mfano: 123....">
+
+
+        <label>kitambulisho cha mtanzania </label>
+
+        <input type="number"
+               name="driver_id"
+               required placeholder="mfano:2239484 --weka namba tu">
+
+        <label>barua pepe</label>
+
+          <input type="text"
+               name="email"
+               required placeholder="email">
+
+        <label>namba ya simu</label>
+
+        <input type="number"
+               name="phone"
+               required placeholder="06..... ">
+
+
+        <label>anuwani ya makaazi</label>
+
+        <input type="text"
+               name="address"
+               required placeholder="mfano:shaurimoyo">
+
+
+        <label>namba ya usajii wa gari</label>
+
+        <input type="text"
+               name="plate_no"
+               required placeholder=" mfano: z.....">
+
+
+        <label>picha ya muombaji</label>
+
+        <input type="file"
+               name="user_image"
+               required title="paspot size" accept="image/*">
+
+
+        <label>picha ya gari sehemu ya mbele </label>
+
+        <input type="file"
+               name="front_image"
+               required title="picha ya mbele " accept="image/*">
+
+               <h2 style="text-align: center;" >ACCOUNT </h2>
+
+        <label>jina</label>
+        <input type="text"
+        name="username"
+        required
+        placeholder="litatumika kuingia kwenye account yako">
+
+
+        <label>neno lasiri</label>
+        <input type="password"
+        name="password"
+        required
+        placeholder="litatumika kuingia kwenye account yako">
+
+
+        <label>hakiki neno la siri</label>
+         <input type="password"
+        name="conform_password"
+        required
+        placeholder=" ">
+
+        <button type="submit">
+            CONTINUE
+        </button>
+
+    </form>
+
+</div>
+
+    
+</body>
+</html>

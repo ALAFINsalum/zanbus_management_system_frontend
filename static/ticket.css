@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #f4f6f8;
+}
+
+
+/* Box kuu */
+.choice-card {
+
+    width: 90%;
+    max-width: 500px;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+
+/* ZANBUS */
+.choice-card h1 {
+
+    margin-bottom: 5px;
+
+    font-size: 40px;
+}
+
+
+/* ONLINE BUS TICKET */
+.subtitle {
+
+    margin-top: 0;
+
+    font-size: 16px;
+
+    color: #777;
+}
+
+
+/* Chagua aina ya abiria */
+.choice-card h2 {
+
+    margin-top: 40px;
+
+    margin-bottom: 25px;
+}
+
+
+/* Buttons container */
+.choice-buttons {
+
+    display: flex;
+
+    gap: 20px;
+
+    justify-content: center;
+
+}
+
+
+/* Student na Citizen buttons */
+.choice-button {
+
+    text-decoration: none;
+
+    padding: 18px 30px;
+
+    border-radius: 10px;
+
+    background: #007bff;
+
+    color: white;
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    transition: 0.3s;
+}
+
+
+/* Mouse ikiwa juu ya button */
+.choice-button:hover {
+
+    transform: translateY(-3px);
+
+    opacity: 0.85;
+}
+
+
+/* Simu */
+@media (max-width: 600px) {
+
+    .choice-buttons {
+
+        flex-direction: column;
+
+    }
+
+    .choice-button {
+
+        display: block;
+
+    }
+
+}

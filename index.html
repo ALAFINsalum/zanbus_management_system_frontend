@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider Kiotomatiki</title>
+    <!-- Icon za Arrow -->
+     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="static/index.css">
+   
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+    background: #eaeaea;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+       .container {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 600px;
+
+    margin: 0;
+    padding: 0;
+
+    background: #f5f5f5;
+    box-shadow: none;
+
+    overflow: hidden;
+}
+
+        .container .slide .item {
+            width: 200px;
+            height: 300px;
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+            border-radius: 20px;
+            box-shadow: 0 30px 50px #505050;
+            background-position: 50% 50%;
+            background-size: cover;
+            display: inline-block;
+            transition: 0.5s;
+        }
+
+        .slide .item:nth-child(1),
+        .slide .item:nth-child(2) {
+            top: 0;
+            left: 0;
+            transform: translate(0, 0);
+            border-radius: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide .item:nth-child(3) {
+            left: 50%;
+        }
+        .slide .item:nth-child(4) {
+            left: calc(50% + 220px);
+        }
+        .slide .item:nth-child(5) {
+            left: calc(50% + 440px);
+        }
+        .slide .item:nth-child(n + 6) {
+            left: calc(50% + 660px);
+            opacity: 0;
+        }
+
+        .item .content {
+            position: absolute;
+            top: 50%;
+            left: 100px;
+            width: 300px;
+            text-align: left;
+            color: #eee;
+            transform: translate(0, -50%);
+            font-family: system-ui;
+            display: none;
+        }
+
+        .slide .item:nth-child(2) .content {
+            display: block;
+        }
+
+        .content .name {
+            font-size: 40px;
+            text-transform: uppercase;
+            font-weight: bold;
+            opacity: 0;
+            animation: animate 1s ease-in-out 1 forwards;
+        }
+
+        .content .des {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: animate 1s ease-in-out 0.3s 1 forwards;
+        }
+
+        .content button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            animation: animate 1s ease-in-out 0.6s 1 forwards;
+        }
+
+        @keyframes animate {
+            from {
+                opacity: 0;
+                transform: translate(0, 100px);
+                filter: blur(33px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(0, 0);
+                filter: blur(0);
+            }
+        }
+
+        .button {
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            bottom: 20px;
+        }
+
+        .button button {
+            width: 40px;
+            height: 35px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin: 0 5px;
+            border: 1px solid #000;
+            transition: 0.3s;
+        }
+
+        .button button:hover {
+            background: #ababab;
+            color: #fff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="static/index.css">
+    <link rel="stylesheet" href="static/index.js">
+</head>
+
+<body>
+
+{% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+            <div class="alert-message {{ message.tags }}">
+                <span class="message-icon">
+                    {% if message.tags == 'success' %}
+                        ✓
+                    {% elif message.tags == 'error' %}
+                        ✕
+                    {% else %}
+                        !
+                    {% endif %}
+                </span>
+
+                <span>{{ message }}</span>
+
+                <button type="button" class="close-message"
+                        onclick="this.parentElement.remove()">
+                    &times;
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<style>
+    .messages-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        width: 350px;
+        max-width: calc(100% - 40px);
+    }
+
+    .alert-message {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px 18px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        background: white;
+        color: #222;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        font-size: 15px;
+        animation: slideIn 0.4s ease;
+    }
+
+    .alert-message.success {
+        border-left: 5px solid #22c55e;
+    }
+
+    .alert-message.error {
+        border-left: 5px solid #ef4444;
+    }
+
+    .alert-message.warning {
+        border-left: 5px solid #f59e0b;
+    }
+
+    .alert-message.info {
+        border-left: 5px solid #3b82f6;
+    }
+
+    .message-icon {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #22c55e;
+        color: white;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .error .message-icon {
+        background: #ef4444;
+    }
+
+    .warning .message-icon {
+        background: #f59e0b;
+    }
+
+    .info .message-icon {
+        background: #3b82f6;
+    }
+
+    .close-message {
+        margin-left: auto;
+        border: none;
+        background: transparent;
+        font-size: 22px;
+        cursor: pointer;
+        color: #777;
+    }
+
+    .close-message:hover {
+        color: #000;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>
+
+<script>
+    // Automatically hide messages after 5 seconds
+    setTimeout(function () {
+        document.querySelectorAll('.alert-message').forEach(function (message) {
+            message.style.opacity = '0';
+            message.style.transform = 'translateX(100%)';
+
+            setTimeout(function () {
+                message.remove();
+            }, 400);
+        });
+    }, 5000);
+</script>
+
+
+    
+    <div class="container">
+        <div class="slide">
+           
+            <div class="item" style="background-image: url('static/image/images.jfif');">
+                <div class="content">
+                    <div class="name">ZANbus</div>
+                    <div class="des">pure-made EKA Eletric buss .</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+
+            <div class="item" style="background-image: url('static/image/images\ \(13\).jpeg');">
+                <div class="content">
+                    <div class="name">TO ZANZIBAR</div>
+                    <div class="des">Now openeration in zanziber.</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+
+            <div class="item" style="background-image: url('static/image/images\ \(19\).jpeg');">
+                <div class="content">
+                    <div class="name">Eka</div>
+                    <div class="des">bila ya moshi bila ya zogo.</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+
+            <div class="item" style="background-image: url('static/image/images\ \(4\).jfif');">
+                <div class="content">
+                    <div class="name">ZANbus</div>
+                    <div class="des">inprocessing ELECTRIC.</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+
+            <div class="item" style="background-image: url('static/image/images\ \(16\).jpeg');">
+                <div class="content">
+                    <div class="name">ZANbus</div>
+                    <div class="des">PAMOJA tuendeleee.</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+
+            <div class="item" style="background-image: url('static/image/images\ \(18\).jpeg')">
+                <div class="content">
+                    <div class="name">ZANbus</div>
+                    <div class="des">zanzibar kama dubai.</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="item" style="background-image: url('static/image/images\ \(4\).jpeg');">
+                <div class="content">
+                    <div class="name">ZANbus</div>
+                    <div class="des">PAMOJA tuendeleee.</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+ 
+        <div class="item" style="background-image: url('static/image/images\ \(5\).jpeg');">
+                <div class="content">
+                    <div class="name">ZANbus</div>
+                    <div class="des">PAMOJA tuendeleee.</div>
+                    <button>Soma Zaidi</button>
+                </div>
+            </div>
+            
+
+
+
+
+
+
+        <div class="button">
+            <button class="prev"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="next"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const $next = document.querySelector('.next');
+        const $prev = document.querySelector('.prev');
+
+        function nextSlide() {
+            const items = document.querySelectorAll('.item');
+            document.querySelector('.slide').appendChild(items[0]);
+        }
+
+        function prevSlide() {
+            const items = document.querySelectorAll('.item');
+            document.querySelector('.slide').prepend(items[items.length - 1]);
+        }
+
+        $next.addEventListener('click', () => {
+            nextSlide();
+            resetAutoplay();
+        });
+
+        $prev.addEventListener('click', () => {
+            prevSlide();
+            resetAutoplay();
+        });
+
+        // Picha zinapita zenyewe kila sekunde 3 (3000ms)
+        let autoPlayInterval = setInterval(nextSlide, 3000);
+
+        function resetAutoplay() {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = setInterval(nextSlide, 3000);
+        }
+    </script>
+
+</section>
+</div>
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ZAN BUS</title>
+
+    <!-- CSS YETU -->
+    <link rel="stylesheet"
+          href="static/style.css">
+
+    <!-- ICONS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="header">
+
+        <div class="logo">
+            ZAN <span>BUS</span>
+        </div>
+
+        <button class="menu-btn"
+                onclick="showMessage()">
+
+            Menu
+
+        </button>
+
+    </header>
+
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+        <h1>
+            Karibu ZAN BUS
+        </h1>
+
+        <p>
+            Chagua huduma unayotaka kuendelea nayo
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================
+         SERVICES CARDS
+    ========================== -->
+
+    <section class="services">
+
+
+        <!-- KATA TICKET -->
+
+        <div class="card"
+             onclick="goToPage('ticket')">
+
+            <div class="icon">
+
+                <i class="fa-solid fa-ticket"></i>
+
+            </div>
+
+            <h3>
+                Kata Ticket
+            </h3>
+
+            <p>
+                Kata ticket yako ya safari
+                kwa urahisi na haraka.
+            </p>
+                <a href="templates/passenger_type.html">
+            <button>
+               
+                Endelea
+            </button>
+            </a>
+
+        </div>
+
+
+
+        <!-- FUATILIA TICKET -->
+
+        <div class="card"
+             onclick="goToPage('track-ticket')">
+
+            <div class="icon">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </div>
+
+            <h3>
+               
+                Fuatilia Ticket
+            </h3>
+          
+
+            <p>
+                Angalia taarifa na hali
+                ya ticket yako.
+            </p>
+                <a href="templates/ticket_tracking.html">
+            <button>
+                Fuatilia
+            </button>
+              </a>
+
+        </div>
+
+
+
+        <!-- ADMIN -->
+
+        <div class="card"
+             onclick="goToPage('admin')">
+
+            <div class="icon">
+
+                <i class="fa-solid fa-user-shield"></i>
+
+            </div>
+
+            <h3>
+                Ingia kama Admin
+            </h3>
+
+            <p>
+                Ingia kwenye mfumo wa
+                usimamizi wa ZAN BUS.
+            </p>
+                <a href="templates/admin_login.html">
+            <button>
+                
+                Ingia
+                
+            </button>
+                    </a>
+        </div>
+
+
+
+        <!-- DEREVA -->
+
+        <div class="card"
+             onclick="goToPage('driver')">
+
+            <div class="icon">
+
+                <i class="fa-solid fa-bus"></i>
+
+            </div>
+
+            <h3>
+                Ingia kama Dereva
+            </h3>
+
+            <p>
+                Dereva anaweza kuingia
+                na kuona safari zake.
+            </p>
+                <a href="templates/driver_login.html">
+            <button>
+                Ingia
+            </button>
+                </a>
+        </div>
+
+
+
+        <!-- MABASI -->
+
+        <div class="card"
+             onclick="goToPage('buses')">
+
+            <div class="icon">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+            </div>
+
+            <h3>
+                Fuatilia Mabasi
+            </h3>
+
+            <p>
+                Angalia mabasi yaliyopo
+                njiani.
+            </p>
+                <a href="templates/bus_tracking.html">
+            <button>
+                Angalia
+            </button>
+            </a>
+
+        </div>
+
+
+
+        <!-- VITUO -->
+
+        <div class="card"
+             onclick="goToPage('stations')">
+
+            <div class="icon">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+            </div>
+
+            <h3>
+                Fuatilia Vituo
+            </h3>
+
+            <p>
+                Angalia vituo vya mabasi
+                na maeneo yake.
+            </p>
+
+            <button>
+                Angalia
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        © 2026 ZAN BUS
+        — Mfumo wa Usafiri Zanzibar
+
+    </footer>
+
+
+
+    <!-- =================================================
+         JAVASCRIPT
+         TUMEIWEKA NDANI YA HTML
+    ================================================== -->
+
+    <script>
+
+        function goToPage(page) {
+
+            if (page === "ticket") {
+
+                alert(
+                    "Unaelekezwa kwenye ukurasa wa Kata Ticket."
+                );
+
+                // BAADAYE:
+                // window.location.href = "/ticket/";
+
+            }
+
+
+            else if (page === "track-ticket") {
+
+                alert(
+                    "Unaelekezwa kwenye Fuatilia Ticket."
+                );
+
+                // BAADAYE:
+                // window.location.href = "/track-ticket/";
+
+            }
+
+
+            else if (page === "admin") {
+
+                alert(
+                    "Unaelekezwa kwenye Admin Login. tafadhali kama wewe si admin usingie kwenye hii  hatua kali za kisheria zitakuhusu kwa uharibufu wowote"
+                );
+
+                // BAADAYE:
+                // window.location.href = "/admin-login/";
+
+            }
+
+
+            else if (page === "driver") {
+
+                alert(
+                    "Unaelekezwa kwenye Driver Login."
+                );
+
+                // BAADAYE:
+                // window.location.href = "/driver-login/";
+
+            }
+
+
+            else if (page === "buses") {
+
+                alert(
+                    "Unaelekezwa kwenye ramani ya mabasi."
+                );
+
+                // BAADAYE:
+                // window.location.href = "/buses/";
+
+            }
+
+
+            else if (page === "stations") {
+
+                alert(
+                    "Unaelekezwa kwenye vituo."
+                );
+
+                // BAADAYE:
+                // window.location.href = "/stations/";
+
+            }
+
+        }
+
+
+
+        function showMessage() {
+
+            alert(
+                "Karibu kwenye Menu ya ZAN BUS."
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

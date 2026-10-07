@@ -1,0 +1,149 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ZANBUS - Fuatilia Mabasi</title>
+     <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js">
+
+    <link rel="stylesheet"
+          href="../static/track_buses.css">
+    <script src="../static/track_buses.js?v=2" defer></script>
+
+    {% if google_maps_api_key %}
+    <!-- Google Maps JavaScript API for the live bus map. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}"></script>
+    {% endif %}
+
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="topbar">
+
+    <div class="logo">
+        🚌 ZANBUS
+    </div>
+
+    <div class="page-title">
+        Fuatilia Mabasi Yaliyo Njiani
+    </div>
+
+</header>
+
+
+
+<!-- MAIN -->
+
+<main class="tracking-container">
+
+
+    <!-- INFORMATION CARD -->
+
+    <div class="info-card">
+
+        <div>
+
+            <span class="status-dot"></span>
+
+            <strong>
+                Live Bus Tracking
+            </strong>
+
+        </div>
+
+
+        <div class="bus-count">
+
+            Mabasi Online:
+
+            <strong id="busCount">
+                0
+            </strong>
+
+        </div>
+
+        <div id="trackingStatus" class="tracking-status">
+            Inasubiri taarifa kutoka kwa drivers...
+        </div>
+
+    </div>
+
+
+
+    <!-- MAP -->
+
+    <div id="map">
+        <!-- Fallback ya Google Maps huonekana mpaka Google Maps API key iwekwe. -->
+        <iframe
+            id="googleMapFallback"
+            title="Google Maps"
+            src="https://www.google.com/maps?q=-6.1659,39.2026&z=13&output=embed"
+            loading="lazy">
+        </iframe>
+    </div>
+
+
+
+    <!-- USER LOCATION -->
+
+    <div class="user-card">
+
+        <h3>
+            📍 Ulipo sasa
+        </h3>
+
+        <p id="userLocation">
+            Inatafuta location yako...
+        </p>
+
+    </div>
+
+
+
+    <!-- BUS LIST -->
+
+    <div class="bus-section">
+
+        <h2>
+            🚌 Mabasi yaliyo njiani
+        </h2>
+
+
+        <div id="busList">
+
+            <p class="loading">
+                Inatafuta mabasi ONLINE...
+            </p>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+const LIVE_BUS_API =
+    "{% url 'live_buses_api' %}";
+
+</script>
+
+
+</body>
+
+</html>

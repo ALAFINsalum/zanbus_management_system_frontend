@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZANBUS - Student Ticket</title>
+     <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js">
+    
+     <link rel="stylesheet" href="../static/create.css">
+     <link rel="stylesheet" href="../static/message.css">
+</head>
+
+<body>
+
+
+     {% if messages %}
+    <div class="messages-container">
+
+        {% for message in messages %}
+
+            {% if message.tags == "success" %}
+                <div class="message-box success-message">
+                    <span class="message-icon">✓</span>
+
+                    <div class="message-content">
+                        <strong>Karibu!</strong>
+                        <p>{{ message }}</p>
+                    </div>
+
+                
+                </div>
+
+{% elif message.tags == "error" %}
+                <div class="message-box error-message">
+                    <span class="message-icon">!</span>
+
+                    <div class="message-content">
+                        <strong>Imekataa!</strong>
+                        <p>{{ message }}</p>
+                    </div>
+
+                    <button class="close-message" onclick="closeMessage(this)">
+                        ×
+                    </button>
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+{% endif %}
+
+
+
+
+<script>
+
+function closeMessage(button) {
+
+    const message = button.closest(".message-box");
+
+    message.classList.add("hide-message");
+
+    setTimeout(function() {
+
+        message.remove();
+
+    }, 400);
+
+}
+
+
+/* FICHA AUTOMATICALLY BAADA YA SEKUNDE 5 */
+
+setTimeout(function() {
+
+    const messages =
+        document.querySelectorAll(".message-box");
+
+    messages.forEach(function(message) {
+
+        message.classList.add("hide-message");
+
+        setTimeout(function() {
+
+            message.remove();
+
+        }, 400);
+
+    });
+
+}, 5000);
+
+</script>
+
+
+
+
+
+    <div class="ticket-container">
+
+        <div class="ticket-card">
+
+            <!-- HEADER -->
+            <div class="ticket-header">
+                <h1>ZANBUS</h1>
+                <p>TICKET SYSTEM  KIGANJANI MWAKO</p>
+                <span>CITIZEN TICKET</span>
+            </div>
+
+
+            <!-- TICKET NUMBER -->
+            <div class="ticket-number">
+                <small>TICKET HII ITATUMIKA MARA MOJA TU</small>
+
+                <h2></h2>
+            </div>
+
+
+            <!-- PASSENGER INFORMATION -->
+            <div class="section">
+
+                <h3>Passenger Information</h3>
+
+                <div class="info-row">
+                    <span>Full Name</span>
+                    <strong>{{ citizen.name }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>citizen id </span>
+                    <strong>{{ citizen.citizen_id }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>phone number </span>
+                    <strong>{{ citizen.phone }}</strong>
+                </div>
+
+               
+
+            <!-- TRAVEL INFORMATION -->
+            <div class="section">
+
+                <h3>Travel Information</h3>
+
+                <div class="route">
+                    <div>
+                        <small>FROM</small>
+                        <strong>{{ citizen.from_place }}</strong>
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                    <div>
+                        <small>TO</small>
+                        <strong>{{ citizen.to_place }}</strong>
+                    </div>
+                </div>
+
+
+                <div class="travel-grid">
+
+                    <div>
+                        <small>DATE</small>
+                        <strong>{{ citizen.travel_date }}</strong>
+                    </div>
+
+                    <div>
+                        <small>TIME</small>
+                        <strong>{{citizen.travel_time }}</strong>
+                    </div>
+
+                    <div>
+                        <small>SEAT</small>
+                        <strong>{{citizen.seat }}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT INFORMATION -->
+            <div class="section payment-section">
+
+                <h3>Payment Information</h3>
+
+                <div class="info-row">
+                    <span>Fare</span>
+                    <strong> Tsh{{ citizen.fare }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Reference Number</span>
+                    <strong class="reference">
+                        {{ citizen.reference_number }}
+                    </strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Control Number</span>
+                    <strong class="control">
+                        {{ citizen.control_number }}
+                    </strong>
+                </div>
+
+                <div class="status">
+                    {{ citizen.payment_status }}
+                </div>
+                 <div>
+                {% if citizen.payment_status == "PAID" %}
+                    {% if citizen.qr_image %}
+                     <img src="{{ citizen.qr_image.url }}" alt="QR Code" width="180">
+                    {% endif %}
+                {% endif %}
+            </div>
+            
+
+
+        
+
+
+           <!-- FOOTER -->
+            <div class="ticket-footer">
+
+            <p>
+                Tafadhali hifadhi refence namba hii kwajili ya kupata ticket yako baada ya malipo.
+            </p>
+
+    {% if citizen.payment_status == "PAID" %}
+
+        <button onclick="window.print()">
+            PRINT TICKET
+        </button>
+
+    {% endif %}
+
+</div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,648 @@
+{% load static %}
+<!-- Template ya dashboard ya dereva; static hutumika kuunganisha CSS na picha. -->
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <!-- =========================
+     DJANGO MESSAGES
+========================= -->
+{% if messages %}
+<div class="messages-container" id="messagesContainer">
+
+    {% for message in messages %}
+
+        <div class="message-box {{ message.tags }}" role="alert">
+
+            <div class="message-icon">
+
+                {% if message.tags == "success" %}
+                    ✓
+                {% elif message.tags == "error" %}
+                    !
+                {% elif message.tags == "warning" %}
+                    ⚠
+                {% elif message.tags == "info" %}
+                    i
+                {% else %}
+                    !
+                {% endif %}
+
+            </div>
+
+            <div class="message-content">
+                <strong>
+                    {% if message.tags == "success" %}
+                        Success
+                    {% elif message.tags == "error" %}
+                        Error
+                    {% elif message.tags == "warning" %}
+                        Warning
+                    {% elif message.tags == "info" %}
+                        Information
+                    {% else %}
+                        Message
+                    {% endif %}
+                </strong>
+
+                <p>{{ message }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="message-close"
+                onclick="closeMessage(this)"
+                aria-label="Close message">
+                &times;
+            </button>
+
+            <div class="message-progress"></div>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+{% endif %}
+
+
+    <!-- Metadata ya browser na mpangilio wa ukurasa kwenye simu. -->
+    <!-- Token ya CSRF inalinda POST ya GPS inayotumwa na JavaScript. -->
+    {% csrf_token %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZANBUS - Driver Dashboard</title>
+    <!-- Faili la CSS linaloweka muonekano wa dashboard. -->
+    <link rel="stylesheet" href="../static/driver_dashbord.css?v=4">
+    <!-- JavaScript hii hutuma GPS ya dereva kwenye server. -->
+    <script src="../static/driver_dashbord.js?v=4"></script>
+        <script>
+            window.DRIVER_TRACKING_API = "{% url 'driver_tracking_api' %}";
+            window.DRIVER_HISTORY_API = "{% url 'driver_session_history_api' %}";
+        </script>
+         <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js">
+</head>
+<body
+    data-server-online="{{ driver.is_online|yesno:'true,false' }}"
+    data-server-started-at="{{ online_started_at }}">
+    <!-- Container kuu inayogawanya ukurasa kuwa sidebar na paneli kuu. -->
+    <div class="dashboard-shell">
+        <!-- Sidebar ina branding, tabs za muda na historia ya safari. -->
+        <aside class="history-sidebar">
+            <div class="brand-box">
+                <div class="brand-icon">🚌</div>
+                <span>ZANBUS</span>
+            </div>
+
+            <!-- Buttons za kuchagua muda wa kuangalia historia ya safari. -->
+            <nav class="history-nav" aria-label="history navigation">
+                <button class="nav-item active">Leo</button>
+                <button class="nav-item">Juma</button>
+                <button class="nav-item">Mwezi</button>
+                <button class="nav-item">Masaa yote</button>
+                <button class="nav-item">History</button>
+            </nav>
+
+            <!-- JavaScript hujaza div hii kwa safari zilizohifadhiwa. -->
+            <div class="history-list-wrap">
+                <div class="history-title">Mikakati ya safari</div>
+                <div id="historyList" class="history-list"></div>
+            </div>
+        </aside>
+
+        <!-- Paneli kuu ina taarifa za dereva, status, basi na location. -->
+        <main class="main-panel">
+            <!-- Header ya profile ya dereva na switch ya online/offline. -->
+            <header class="topbar">
+                <div class="driver-profile">
+                    <div class="avatar-wrap">
+                        <img src="../static/image/images.jfif" alt="Driver photo">
+                    </div>
+                    <div class="driver-copy">
+                        <span class="driver-label">Driver</span>
+                        <h2>{{driver.name }}</h2>
+                    </div>
+                </div>
+
+                <div class="status-box">
+                    <div class="status-text">
+                        <span id="statusDot" class="status-dot"></span>
+                        <div>
+                            <strong id="statusText">OFFLINE</strong>
+                            <small id="statusMessage">Huwashi location</small>
+                        </div>
+                    </div>
+
+                    <label class="switch" aria-label="Toggle driver online status">
+                        <input type="checkbox" id="onlineSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </header>
+
+            <!-- Grid ya maudhui: hali ya safari upande wa kushoto, taarifa upande wa kulia. -->
+            <section class="content-grid">
+                <div class="bus-panel">
+                    <div class="panel-header">
+                        <span>Hali ya safari</span>
+                        <span id="busStateLabel" class="bus-state">Imesimama</span>
+                    </div>
+
+                    <div class="bus-track">
+                        <div class="track-line"></div>
+                        <div class="road-dots"></div>
+                        <div class="bus-vehicle" id="busVehicle">🚌</div>
+                    </div>
+                </div>
+
+                <div class="info-column">
+                    <div class="info-card active-timer">
+                        <span class="card-label">Masaa ya sasa</span>
+                        <h3 id="elapsedTime">00:00:00</h3>
+                        <p>Tangu ulipo washa mpaka ulipo zima</p>
+                    </div>
+
+                    <div class="info-card location-card">
+                        <div class="card-header-row">
+                            <span>📍 Location yako</span>
+                            <span id="locationSignal" class="location-signal">OFF</span>
+                        </div>
+
+                        <div class="location-row">
+                            <label>Latitude</label>
+                            <strong id="latitude">---</strong>
+                        </div>
+                        <div class="location-row">
+                            <label>Longitude</label>
+                            <strong id="longitude">---</strong>
+                        </div>
+                        <div class="location-row">
+                            <label>Accuracy</label>
+                            <strong id="accuracy">---</strong>
+                        </div>
+
+                        <div class="map-card">
+                            <div class="map-header">
+                                <span>Google Location</span>
+                                <span class="map-pin">📍</span>
+                            </div>
+                            <iframe
+                                id="googleMapFrame"
+                                title="Google Maps location"
+                                src="https://www.google.com/maps?q=-6.7924,39.2083&z=15&output=embed"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                            <p class="map-caption">Mahali tunapokwenda</p>
+                        </div>
+
+                        <div id="locationStatus" class="location-status">Location haijawashwa</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // References za elements zinazobadilishwa na JavaScript.
+        const onlineSwitch = document.getElementById("onlineSwitch");
+        const statusText = document.getElementById("statusText");
+        const statusMessage = document.getElementById("statusMessage");
+        const statusDot = document.getElementById("statusDot");
+        const busVehicle = document.getElementById("busVehicle");
+        const busStateLabel = document.getElementById("busStateLabel");
+        const elapsedTime = document.getElementById("elapsedTime");
+        const locationSignal = document.getElementById("locationSignal");
+        const latitude = document.getElementById("latitude");
+        const longitude = document.getElementById("longitude");
+        const accuracy = document.getElementById("accuracy");
+        const locationStatus = document.getElementById("locationStatus");
+        const googleMapFrame = document.getElementById("googleMapFrame");
+
+        let watchId = null;
+        let heartbeatInterval = null;
+        let lastLatitude = null;
+        let lastLongitude = null;
+        let timerStartedAt = null;
+        let timerInterval = null;
+        let currentSession = null;
+        const historyKey = "zanbus_driver_history";
+        const onlineStateKey = "zanbus_driver_online";
+        const sessionStartKey = "zanbus_driver_session_start";
+        const serverOnline = document.body.dataset.serverOnline === "true";
+        const serverStartedAt = document.body.dataset.serverStartedAt;
+
+        // Hubadilisha sekunde kuwa saa: dakika: sekunde.
+        function formatDuration(totalSeconds) {
+            const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+            const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+            const seconds = String(totalSeconds % 60).padStart(2, "0");
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Hutengeneza tarehe ya safari katika muundo unaosomeka.
+        function formatHistoryTime(dateValue) {
+            const date = new Date(dateValue);
+            return date.toLocaleString("sw-TZ", {
+                day: "2-digit",
+                month: "short",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }
+
+        // Huunganisha latitude na longitude; huonyesha -- ikiwa hazipo.
+        function formatLocation(lat, lng) {
+            if (lat === "---" || lng === "---") {
+                return "--";
+            }
+            return `${lat}, ${lng}`;
+        }
+
+        // Husoma historia ya safari kutoka localStorage ya browser.
+        function readHistory() {
+            try {
+                return JSON.parse(localStorage.getItem(historyKey)) || [];
+            } catch {
+                return [];
+            }
+        }
+
+        // Huhifadhi historia mpya kwenye localStorage.
+        function writeHistory(items) {
+            localStorage.setItem(historyKey, JSON.stringify(items));
+        }
+
+        // Huonyesha safari zilizohifadhiwa kwenye sidebar.
+        function renderHistory() {
+            const historyList = document.getElementById("historyList");
+            const entries = readHistory();
+
+            if (!entries.length) {
+                historyList.innerHTML = '<div class="history-empty">Hakuna historia ya safari.</div>';
+                return;
+            }
+
+            historyList.innerHTML = entries.slice().reverse().map(item => `
+                <div class="history-item">
+                    <div class="history-topline">
+                        <span>${item.duration}</span>
+                        <span>${item.dateLabel}</span>
+                    </div>
+                    <div class="history-meta">Start: ${item.startLocation}</div>
+                    <div class="history-meta">Stop: ${item.stopLocation}</div>
+                </div>
+            `).join("");
+        }
+
+        // Hupakia historia iliyohifadhiwa kwenye database ya dereva.
+        function loadServerHistory() {
+            const historyUrl = window.DRIVER_HISTORY_API;
+            if (!historyUrl) {
+                renderHistory();
+                return;
+            }
+
+            fetch(historyUrl, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`History server error (${response.status})`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const entries = (data.sessions || []).map(session => {
+                        const stoppedAt = session.ended_at || new Date().toISOString();
+                        return {
+                            dateLabel: formatHistoryTime(stoppedAt),
+                            duration: formatDuration(session.duration_seconds || 0),
+                            startLocation: formatLocation(session.start_latitude ?? "---", session.start_longitude ?? "---"),
+                            stopLocation: formatLocation(session.end_latitude ?? "---", session.end_longitude ?? "---")
+                        };
+                    });
+
+                    const historyList = document.getElementById("historyList");
+                    historyList.innerHTML = entries.length
+                        ? entries.map(item => `
+                            <div class="history-item">
+                                <div class="history-topline">
+                                    <span>${item.duration}</span>
+                                    <span>${item.dateLabel}</span>
+                                </div>
+                                <div class="history-meta">Start: ${item.startLocation}</div>
+                                <div class="history-meta">Stop: ${item.stopLocation}</div>
+                            </div>
+                        `).join("")
+                        : '<div class="history-empty">Hakuna historia ya safari.</div>';
+                })
+                .catch(error => {
+                    console.error("History loading error:", error);
+                    renderHistory();
+                });
+        }
+
+        // Husasisha ramani ya Google kwa coordinates za dereva.
+        function updateGoogleMap(lat, lng) {
+            const safeLat = Number(lat);
+            const safeLng = Number(lng);
+
+            if (Number.isFinite(safeLat) && Number.isFinite(safeLng)) {
+                googleMapFrame.src = `https://www.google.com/maps?q=${safeLat},${safeLng}&z=15&output=embed`;
+                return;
+            }
+
+            googleMapFrame.src = "https://www.google.com/maps?q=-6.7924,39.2083&z=15&output=embed";
+        }
+
+        // Hupata location ya sasa kwa kuanza au kumaliza safari.
+        function getCurrentLocationSnapshot(callback) {
+            if (!navigator.geolocation) {
+                callback({ lat: "---", lng: "---" });
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    callback({
+                        lat: position.coords.latitude.toFixed(6),
+                        lng: position.coords.longitude.toFixed(6)
+                    });
+                },
+                function () {
+                    callback({ lat: "---", lng: "---" });
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
+        // Huanza timer ya muda ambao dereva yupo online.
+        function startTimer(startedAt = Date.now()) {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+
+            timerStartedAt = Number.isFinite(startedAt) ? startedAt : Date.now();
+
+            updateElapsedTime();
+
+            timerInterval = setInterval(() => {
+                updateElapsedTime();
+            }, 1000);
+        }
+
+        function updateElapsedTime() {
+            const elapsed = Math.max(0, Math.floor((Date.now() - timerStartedAt) / 1000));
+            elapsedTime.textContent = formatDuration(elapsed);
+        }
+
+        // Husimamisha timer na kuirudisha kwenye sifuri.
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            elapsedTime.textContent = "00:00:00";
+        }
+
+        // Huhifadhi safari iliyomalizika pamoja na muda na locations zake.
+        function saveSessionToHistory(startTime, stopTime, durationSeconds, startLocation, stopLocation) {
+            const entries = readHistory();
+            entries.push({
+                dateLabel: formatHistoryTime(stopTime),
+                duration: formatDuration(durationSeconds),
+                startLocation: formatLocation(startLocation.lat, startLocation.lng),
+                stopLocation: formatLocation(stopLocation.lat, stopLocation.lng),
+                startedAt: startTime,
+                stoppedAt: stopTime
+            });
+            writeHistory(entries);
+            renderHistory();
+        }
+
+        // Huanzisha session mpya na kuweka location ya kuanzia.
+        function startSessionTracking() {
+            if (currentSession) {
+                return;
+            }
+
+            const startedAt = localStorage.getItem(sessionStartKey) || new Date().toISOString();
+            localStorage.setItem(sessionStartKey, startedAt);
+
+            currentSession = {
+                startedAt,
+                startLocation: { lat: "---", lng: "---" }
+            };
+
+            getCurrentLocationSnapshot(function (location) {
+                if (currentSession) {
+                    currentSession.startLocation = location;
+                }
+            });
+        }
+
+        // Humaliza session, hupata location ya mwisho na kuhifadhi historia.
+        function endSessionTracking() {
+            if (!currentSession) {
+                return;
+            }
+
+            const startTime = new Date(currentSession.startedAt);
+            const stopTime = new Date();
+            const durationSeconds = Math.max(1, Math.floor((stopTime - startTime) / 1000));
+            const startLocation = currentSession.startLocation;
+
+            getCurrentLocationSnapshot(function (stopLocation) {
+                saveSessionToHistory(
+                    currentSession.startedAt,
+                    stopTime.toISOString(),
+                    durationSeconds,
+                    startLocation,
+                    stopLocation
+                );
+                currentSession = null;
+                localStorage.removeItem(sessionStartKey);
+            });
+        }
+
+        // Huwasha status, timer, animation ya basi na GPS tracking.
+        function goOnline() {
+            localStorage.setItem(onlineStateKey, "true");
+            statusText.textContent = "ONLINE";
+            statusMessage.textContent = "Dereva yupo njiani";
+            statusDot.classList.add("online");
+            busVehicle.classList.remove("active");
+            void busVehicle.offsetWidth;
+            busVehicle.classList.add("active");
+            busStateLabel.textContent = "Inakwenda";
+            locationSignal.textContent = "ON";
+            locationSignal.classList.add("active");
+            locationStatus.textContent = "Inatafuta location yako...";
+            locationStatus.classList.add("active");
+
+            if (serverStartedAt && !localStorage.getItem(sessionStartKey)) {
+                localStorage.setItem(sessionStartKey, serverStartedAt);
+            }
+
+            startSessionTracking();
+            const savedStart = localStorage.getItem(sessionStartKey);
+            const parsedStart = savedStart ? Date.parse(savedStart) : Date.now();
+            startTimer(Number.isFinite(parsedStart) ? parsedStart : Date.now());
+            sendLocation(null, null, "ONLINE");
+
+            if (!navigator.geolocation) {
+                locationStatus.textContent = "ONLINE; GPS haipatikani kwenye browser";
+                return;
+            }
+
+            watchId = navigator.geolocation.watchPosition(
+                function (position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    lastLatitude = lat;
+                    lastLongitude = lng;
+                    const acc = position.coords.accuracy;
+
+                    latitude.textContent = lat.toFixed(6);
+                    longitude.textContent = lng.toFixed(6);
+                    accuracy.textContent = Math.round(acc) + " meters";
+                    updateGoogleMap(lat, lng);
+                    sendLocation(lat, lng, "ONLINE");
+                    locationStatus.textContent = "✅ Location inafuatiliwa";
+                    locationStatus.classList.add("active");
+
+                    if (!heartbeatInterval) {
+                        heartbeatInterval = setInterval(function () {
+                            if (lastLatitude !== null && lastLongitude !== null) {
+                                sendLocation(lastLatitude, lastLongitude, "ONLINE");
+                            }
+                        }, 15000);
+                    }
+                },
+                function (error) {
+                    console.log("Location error:", error);
+                    locationStatus.textContent = "❌ Imeshindwa kupata location";
+                    statusMessage.textContent = "GPS haipatikani; bado ONLINE";
+
+                    if (error.code === 1) {
+                        alert("Tafadhali ruhusu browser kutumia location yako.");
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    maximumAge: 5000,
+                    timeout: 10000
+                }
+            );
+        }
+
+        // Huzima status, GPS tracking, timer na kurudisha taarifa za location.
+        function goOffline() {
+            window.driverTimerEnabled = false;
+            localStorage.removeItem(onlineStateKey);
+            localStorage.removeItem(sessionStartKey);
+            statusText.textContent = "OFFLINE";
+            statusMessage.textContent = "Dereva hayupo njiani";
+            statusDot.classList.remove("online");
+            busVehicle.classList.remove("active");
+            busStateLabel.textContent = "Imesimama";
+            locationSignal.textContent = "OFF";
+            locationSignal.classList.remove("active");
+            locationStatus.textContent = "Location imezimwa";
+            locationStatus.classList.remove("active");
+
+            // Simamisha timer kabla ya requests za history na server.
+            stopTimer();
+
+            try {
+                endSessionTracking();
+            } catch (error) {
+                console.error("History error:", error);
+            }
+
+            if (watchId !== null) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+            }
+
+            if (heartbeatInterval) {
+                clearInterval(heartbeatInterval);
+                heartbeatInterval = null;
+            }
+
+            sendOfflineStatus();
+
+            // Refresh history ya kushoto baada ya safari kuhifadhiwa server.
+            setTimeout(function () {
+                if (typeof loadServerHistory === "function") {
+                    loadServerHistory();
+                }
+            }, 500);
+
+            latitude.textContent = "---";
+            longitude.textContent = "---";
+            accuracy.textContent = "---";
+        }
+
+        // Huita goOnline au goOffline switch inapobadilishwa.
+        onlineSwitch.addEventListener("change", function () {
+            if (this.checked) {
+                goOnline();
+            } else {
+                goOffline();
+            }
+        });
+
+        // Rudisha ONLINE baada ya refresh; browser haiwezi kuendelea GPS tab ikiwa imefungwa.
+        if (serverOnline || localStorage.getItem(onlineStateKey) === "true") {
+            onlineSwitch.checked = true;
+            goOnline();
+        }
+
+        // Huweka tab iliyobonyezwa kuwa active.
+        document.querySelectorAll(".nav-item").forEach((item) => {
+            item.addEventListener("click", function () {
+                document.querySelectorAll(".nav-item").forEach((navItem) => navItem.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+
+        // Huunda button ya kusasisha location manually.
+        const locationButton = document.createElement("button");
+        locationButton.id = "locationButton";
+        locationButton.className = "location-btn";
+        locationButton.textContent = "📍 Sasisha Location";
+        locationButton.addEventListener("click", function () {
+            if (!onlineSwitch.checked) {
+                alert("Kwanza washa ONLINE.");
+                return;
+            }
+
+            if (!navigator.geolocation) {
+                alert("Browser yako hai-support location.");
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    latitude.textContent = position.coords.latitude.toFixed(6);
+                    longitude.textContent = position.coords.longitude.toFixed(6);
+                    accuracy.textContent = Math.round(position.coords.accuracy) + " meters";
+                    updateGoogleMap(position.coords.latitude, position.coords.longitude);
+                    locationStatus.textContent = "✅ Location imepatikana";
+                    locationStatus.classList.add("active");
+                },
+                function (error) {
+                    console.log(error);
+                    alert("Huwezi kutumia location mpaka uruhusu location kwenye browser.");
+                },
+                { enableHighAccuracy: true }
+            );
+        });
+
+        // Huongeza button hiyo chini ya taarifa za location.
+        const infoColumn = document.querySelector(".info-column");
+        infoColumn.appendChild(locationButton);
+        loadServerHistory();
+    </script>
+</body>
+</html>
