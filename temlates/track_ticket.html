@@ -1,306 +1,346 @@
-{% load static %}
 <!DOCTYPE html>
+
 <html lang="sw">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ZANBUS - Fuatilia Ticket</title>
+```
+<title>ZANBUS - Fuatilia Ticket</title>
 
-<link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="./static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
 
 <!-- Bootstrap JavaScript -->
-<script src="../static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-<link rel="stylesheet" href="../static/track_ticket.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="./static/track_ticket.css">
+```
+
 </head>
 
 <body>
 
-    <!-- ==============================
-         BACKGROUND IMAGE SLIDER
-    =============================== -->
+```
+<!-- ==============================
+     BACKGROUND IMAGE SLIDER
+=============================== -->
 
-    <div class="container">
+<div class="container">
 
-        <div class="slide">
+    <div class="slide">
 
-            <div class="item"
-                 style="background-image: url('../static/image/images.jfif');">
+        <div class="item"
+            style="background-image: url('./static/image/images.jfif');">
 
-                <div class="content">
-                    <div class="name">ZANBUS</div>
-                    <div class="des">
-                        Pure-made EKA Electric Bus.
-                    </div>
+            <div class="content">
+                <div class="name">ZANBUS</div>
+                <div class="des">
+                    Pure-made EKA Electric Bus.
                 </div>
-
             </div>
 
+        </div>
 
-            <div class="item"
-                 style="background-image: url('../static/image/images (13).jpeg');">
 
-                <div class="content">
-                    <div class="name">TO ZANZIBAR</div>
-                    <div class="des">
-                        Now operating in Zanzibar.
-                    </div>
+        <div class="item"
+            style="background-image: url('./static/image/images (13).jpeg');">
+
+            <div class="content">
+                <div class="name">TO ZANZIBAR</div>
+                <div class="des">
+                    Now operating in Zanzibar.
                 </div>
-
             </div>
 
+        </div>
 
-            <div class="item"
-                 style="background-image: url('../static/image/images (19).jpeg');">
 
-                <div class="content">
-                    <div class="name">EKA</div>
-                    <div class="des">
-                        Bila ya moshi, bila ya zogo.
-                    </div>
+        <div class="item"
+            style="background-image: url('./static/image/images (19).jpeg');">
+
+            <div class="content">
+                <div class="name">EKA</div>
+                <div class="des">
+                    Bila ya moshi, bila ya zogo.
                 </div>
-
             </div>
 
+        </div>
 
-            <div class="item"
-                 style="background-image: url('../static/image/images (4).jfif');">
 
-                <div class="content">
-                    <div class="name">ZANBUS</div>
-                    <div class="des">
-                        In processing ELECTRIC.
-                    </div>
+        <div class="item"
+            style="background-image: url('./static/image/images (4).jfif');">
+
+            <div class="content">
+                <div class="name">ZANBUS</div>
+                <div class="des">
+                    In processing ELECTRIC.
                 </div>
-
             </div>
 
+        </div>
 
-            <div class="item"
-                 style="background-image: url('../static/image/images (16).jpeg');">
 
-                <div class="content">
-                    <div class="name">ZANBUS</div>
-                    <div class="des">
-                        Pamoja tuendelee.
-                    </div>
+        <div class="item"
+            style="background-image: url('./static/image/images (16).jpeg');">
+
+            <div class="content">
+                <div class="name">ZANBUS</div>
+                <div class="des">
+                    Pamoja tuendelee.
                 </div>
-
             </div>
 
+        </div>
 
-            <div class="item"
-                 style="background-image: url('../static/image/images (18).jpeg');">
 
-                <div class="content">
-                    <div class="name">ZANBUS</div>
-                    <div class="des">
-                        Zanzibar kama Dubai.
-                    </div>
+        <div class="item"
+            style="background-image: url('./static/image/images (18).jpeg');">
+
+            <div class="content">
+                <div class="name">ZANBUS</div>
+                <div class="des">
+                    Zanzibar kama Dubai.
                 </div>
-
             </div>
 
         </div>
 
     </div>
 
+</div>
 
 
-    <!-- ==============================
-         DARK OVERLAY
-    ============================== -->
+<!-- ==============================
+     DARK OVERLAY
+=============================== -->
 
-    <div class="overlay"></div>
-
-
-
-    <!-- ==============================
-         TRACK TICKET CARD
-    ============================== -->
-
-    <div class="track-container">
-
-        <div class="track-card">
+<div class="overlay"></div>
 
 
-            <!-- LOGO -->
+<!-- ==============================
+     TRACK TICKET CARD
+=============================== -->
 
-            <div class="logo-section">
+<div class="track-container">
 
-                <div class="logo">
-                    Z
-                </div>
+    <div class="track-card">
 
-                <h1>ZANBUS</h1>
+        <!-- LOGO -->
 
-                <p>TICKET SYSTEM</p>
+        <div class="logo-section">
+
+            <div class="logo">
+                Z
+            </div>
+
+            <h1>ZANBUS</h1>
+
+            <p>TICKET SYSTEM</p>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div class="title-section">
+
+            <h2>Fuatilia Ticket Yako</h2>
+
+            <p>
+                Weka Reference Number yako ili
+                kuona taarifa za ticket yako.
+            </p>
+
+        </div>
+
+
+        <!-- TRACK FORM -->
+
+        <form id="trackForm">
+
+            <div class="input-group">
+
+                <label for="reference">
+                    Reference Number
+                </label>
+
+                <input
+                    type="text"
+                    id="reference"
+                    name="reference_number"
+                    placeholder="Mfano: ZAN-1234567"
+                    autocomplete="off"
+                    required
+                >
+
+                <small id="errorMessage"></small>
 
             </div>
 
 
+            <button
+                type="submit"
+                id="searchButton">
 
-            <!-- TITLE -->
+                <span id="buttonText">
+                    TAFUTA TICKET
+                </span>
 
-            <div class="title-section">
+                <span id="loader" class="loader"></span>
 
-                <h2>Fuatilia Ticket Yako</h2>
+            </button>
 
-                <p>
-                    Weka Reference Number yako ili
-                    kuona taarifa za ticket yako.
-                </p>
+        </form>
 
+
+        <!-- INFORMATION -->
+
+        <div class="info-box">
+
+            <div class="info-icon">
+                i
             </div>
 
+            <p>
+                Weka Reference Number uliyopewa
+                wakati wa kuomba ticket.
+            </p>
 
-        <form method="POST" id="trackForm">
-
-            {% csrf_token %}
-
-    <div class="input-group">
-
-        <label for="reference">
-            Reference Number
-        </label>
-
-        <input 
-            type="text"
-            id="reference"
-            name="reference_number"
-            placeholder="Mfano: ZAN-1234567"
-            autocomplete="off"
-            required
-        >
-
-        <small id="errorMessage"></small>
-
-    </div>
-
-    <button 
-        type="submit"
-        id="searchButton">
-
-        <span id="buttonText">
-            TAFUTA TICKET
-        </span>
-
-        <span id="loader" class="loader"></span>
-
-    </button>
-
-</form>
+        </div>
 
 
+        <!-- SEARCH RESULT -->
 
-            <!-- INFORMATION -->
-
-            <div class="info-box">
-
-                <div class="info-icon">
-                    i
-                </div>
-
-                <p>
-                    Weka Reference Number uliyopewa
-                    wakati wa kuomba ticket.
-                </p>
-
-            </div>
+        <div
+            id="result"
+            class="result">
+        </div>
 
 
+        <!-- FOOTER -->
 
-            <!-- SEARCH RESULT -->
+        <div class="footer">
 
-            <div
-                id="result"
-                class="result">
-            </div>
-
-
-
-            <!-- FOOTER -->
-
-            <div class="footer">
-
-                <p>
-                    © 2026 ZANBUS Ticket System
-                </p>
-
-            </div>
-
+            <p>
+                © 2026 ZANBUS Ticket System
+            </p>
 
         </div>
 
     </div>
 
+</div>
 
 
-    <!-- ==============================
-         JAVASCRIPT
-    ============================== -->
+<!-- ==============================
+     JAVASCRIPT
+=============================== -->
 
-    <script>
+<script>
 
-        const slide =
-            document.querySelector(".slide");
+    const slide = document.querySelector(".slide");
 
 
-        // ==============================
-        // NEXT IMAGE
-        // ==============================
+    // ==============================
+    // NEXT IMAGE
+    // ==============================
 
-        function nextSlide() {
+    function nextSlide() {
 
-            const items =
+        const items = document.querySelectorAll(".item");
+
+        if (items.length > 0) {
+            slide.appendChild(items[0]);
+        }
+
+    }
+
+
+    // ==============================
+    // AUTOMATIC SLIDER
+    // ==============================
+
+    setInterval(() => {
+
+        const items = document.querySelectorAll(".item");
+
+        if (items.length > 0) {
+
+            slide.appendChild(items[0]);
+
+            const newItems =
                 document.querySelectorAll(".item");
 
-            if (items.length > 0) {
+            const content =
+                newItems[0].querySelector(".content");
 
-                slide.appendChild(items[0]);
+            if (content) {
+
+                content.classList.remove("animate");
+
+                void content.offsetWidth;
+
+                content.classList.add("animate");
 
             }
 
         }
 
-
-        // ==============================
-        // AUTOMATIC SLIDER
-        // ==============================
-
-    setInterval(() => {
-    const items = document.querySelectorAll('.item');
-
-    slide.appendChild(items[0]);
-
-    const newItems = document.querySelectorAll('.item');
-    const content = newItems[0].querySelector('.content');
-
-    if (content) {
-        content.classList.remove('animate');
-
-        void content.offsetWidth;
-
-        content.classList.add('animate');
-    }
-
-}, 3000);
-        
-        
-        (nextSlide, 4000);
+    }, 3000);
 
 
-        
+    // ==============================
+    // TRACK FORM
+    // ==============================
+
+    const trackForm =
+        document.getElementById("trackForm");
+
+    const reference =
+        document.getElementById("reference");
+
+    const errorMessage =
+        document.getElementById("errorMessage");
 
 
-        
+    trackForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        const referenceNumber =
+            reference.value.trim();
 
 
+        if (referenceNumber === "") {
 
-        
-    </script>
+            errorMessage.textContent =
+                "Tafadhali weka Reference Number.";
+
+            return;
+
+        }
+
+
+        errorMessage.textContent = "";
+
+        console.log(
+            "Reference Number:",
+            referenceNumber
+        );
+
+        /*
+            Hapa ndipo tutakapounganisha
+            Django backend/API yako baadaye.
+        */
+
+    });
+
+</script>
+```
 
 </body>
 
