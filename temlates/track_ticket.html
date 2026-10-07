@@ -5,25 +5,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-```
 <title>ZANBUS - Fuatilia Ticket</title>
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="./static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
-
-<!-- Bootstrap JavaScript -->
-<script src="./static/bootstrap-5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="../static/bootstrap-5.3.8/dist/css/bootstrap-grid.min.css">
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="./static/track_ticket.css">
-```
+<link rel="stylesheet" href="../static/track_ticket.css">
 
 </head>
 
 <body>
 
-```
 <!-- ==============================
      BACKGROUND IMAGE SLIDER
 =============================== -->
@@ -33,7 +26,7 @@
     <div class="slide">
 
         <div class="item"
-            style="background-image: url('./static/image/images.jfif');">
+            style="background-image: url('../static/image/images.jfif');">
 
             <div class="content">
                 <div class="name">ZANBUS</div>
@@ -46,7 +39,7 @@
 
 
         <div class="item"
-            style="background-image: url('./static/image/images (13).jpeg');">
+            style="background-image: url('../static/image/images (13).jpeg');">
 
             <div class="content">
                 <div class="name">TO ZANZIBAR</div>
@@ -59,7 +52,7 @@
 
 
         <div class="item"
-            style="background-image: url('./static/image/images (19).jpeg');">
+            style="background-image: url('../static/image/images (19).jpeg');">
 
             <div class="content">
                 <div class="name">EKA</div>
@@ -72,7 +65,7 @@
 
 
         <div class="item"
-            style="background-image: url('./static/image/images (4).jfif');">
+            style="background-image: url('../static/image/images (4).jfif');">
 
             <div class="content">
                 <div class="name">ZANBUS</div>
@@ -85,7 +78,7 @@
 
 
         <div class="item"
-            style="background-image: url('./static/image/images (16).jpeg');">
+            style="background-image: url('../static/image/images (16).jpeg');">
 
             <div class="content">
                 <div class="name">ZANBUS</div>
@@ -98,7 +91,7 @@
 
 
         <div class="item"
-            style="background-image: url('./static/image/images (18).jpeg');">
+            style="background-image: url('../static/image/images (18).jpeg');">
 
             <div class="content">
                 <div class="name">ZANBUS</div>
@@ -242,55 +235,29 @@
 
 <script>
 
+    // ==============================
+    // SLIDER
+    // ==============================
+
     const slide = document.querySelector(".slide");
 
-
-    // ==============================
-    // NEXT IMAGE
-    // ==============================
 
     function nextSlide() {
 
         const items = document.querySelectorAll(".item");
 
         if (items.length > 0) {
+
             slide.appendChild(items[0]);
+
         }
 
     }
 
 
-    // ==============================
-    // AUTOMATIC SLIDER
-    // ==============================
+    // Change image every 3 seconds
 
-    setInterval(() => {
-
-        const items = document.querySelectorAll(".item");
-
-        if (items.length > 0) {
-
-            slide.appendChild(items[0]);
-
-            const newItems =
-                document.querySelectorAll(".item");
-
-            const content =
-                newItems[0].querySelector(".content");
-
-            if (content) {
-
-                content.classList.remove("animate");
-
-                void content.offsetWidth;
-
-                content.classList.add("animate");
-
-            }
-
-        }
-
-    }, 3000);
+    setInterval(nextSlide, 3000);
 
 
     // ==============================
@@ -311,6 +278,7 @@
 
         event.preventDefault();
 
+
         const referenceNumber =
             reference.value.trim();
 
@@ -327,20 +295,21 @@
 
         errorMessage.textContent = "";
 
+
         console.log(
             "Reference Number:",
             referenceNumber
         );
 
+
         /*
-            Hapa ndipo tutakapounganisha
-            Django backend/API yako baadaye.
+            Baadaye hapa tutaunganisha
+            Django backend/API yako.
         */
 
     });
 
 </script>
-```
 
 </body>
 
